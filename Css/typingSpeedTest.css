@@ -2,5 +2,52 @@
 *{
   margin:0px;
   padding:0px;  
-  font-family: 'Shadows Into Light', cursive;
+  font-family: 'Baloo Paaji 2', cursive;
+}
+.box{
+   width:100%;
+   height:100vh; 
+   position:relative;
+   text-align:center;
+   background-color:#3498DB;
+}
+.box .childBox{
+    position: absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    -webkit-transform:translate(-50%,-50%);
+    -moz-transform:translate(-50%,-50%);
+    -ms-transform:translate(-50%,-50%);
+    -o-transform:translate(-50%,-50%);
+}
+h1{
+    font-size:2.3rem ;
+    color:#E0DCE1;
+    text-shadow:1px 1px 30px #444 ;
+    margin-bottom:20px;
+}
+h2{
+    margin-bottom:20px;
+}
+#textArea
+{
+   background-color:#444;
+   color: #E0DCE1;
+   border:20px solid #34495E;
+   font-size:20px;
+   letter-spacing:2px;
+   box-shadow:2px 2px 20px black;
+   outline:none ;
+}
+.btn{
+    font-size:20px;
+    font-weight:bold;
+    border:6px solid #2980B9;
+    padding:10px 20px;
+    border-radius: 20px;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    -ms-border-radius: 20px;
+    -o-border-radius: 20px;
 }
