@@ -30,12 +30,26 @@ console.log("This is javascript :");
  const time = {initial:0,finial:0,total:0};
 
 //IT is word object ,it store words related information : 
- const word = {typed:0,correct:0,incorrect:0,totoal:0};
+ const word = {typed:0,correct:0,incorrect:0,total:0};
 
+const speed = {net:0,gross:0,}; 
  // It is random function :which is generate & return random number 
  //according to argument given to it:
 const random = (n) =>{
  return  Math.floor(Math.random()*n) ;
+}
+
+const grossSpeed = (time,word) =>{
+
+  let speed = ((word.typed / time.total) * 60) ;  
+ console.log("Your gross Speed :",speed);
+ return speed ;
+}
+
+const calculateTotalTime = (time) =>{
+    total  = ((time.finial - time.initial) / 1000) // the time is in milliseconds & we have to convert it into Seconds: 
+    console.log("total time",total); 
+    return total;
 }
 
 //It is display function , It is taking four argument :
@@ -53,26 +67,55 @@ const Display = (para,random,position,textArea) => {
 
 }
 
-const count = (time,textArea,header2,word) =>{
+const count = (time,textArea,header2,word) => {
 
-    //It will create time stamp when user Done:
-    let now = new Date();
-    //It will get time from time stamp & store to time object :
-     time.finial = now.getTime();
+      //It will create time stamp when user Done:
+       let now = new Date();
     
-    //It will collect user typed string/paragraph & store to text variable
-     let  text = textArea.value ;
+     //It will get time from time stamp & store to time object :
+      time.finial = now.getTime();
     
-    //It convert typed string/paragraph to words & store into word object : 
-     word.typed = text.split(' ').length ;
+      //It will collect user typed string/paragraph & store to text variable
+       const  text = textArea.value ;
+    
+     //It convert typed string/paragraph to words & store into array:
+       const typedWords = text.split(' ');
+    
+     //It store total typed words into words object: 
+       word.typed = typedWords.length ;
  
      // It will collect Display paragraph/string & store to text2 variable
-     let text2 =  header2.innerText ;
-  
-    //It will convert render string/paragraph  to words & store into word object :  
+      const text2 =  header2.innerText ;
+    
+    //It will convert render string/paragraph  to words & store into array :  
+      const displayWords =  text2.split(' ');             
+       
+    //It store total display words into words object :
       word.total = text2.split(' ').length ;
 
     
+      // total typed correct count algortithm :
+      let correct = 0 ;
+     
+      // Iterating displayWords array through for Each method (google it if you don't know :) :
+      displayWords.forEach(function(word,index){
+         
+         //if displayWords and Typed words match then it will increment correct variable :  
+          if(word === typedWords[index])
+           correct++;
+      });
+   
+    //Storing  total no's of correct words to word object:
+      word.correct = correct ;
+ 
+    //Storing  total no's of incorrect words to word object: 
+      word.incorrect = word.typed - word.correct ;
+   console.log("typed words",typedWords);
+   console.log("displaed Words",displayWords)   
+  console.log("total typed correct words:",correct);
+  console.log("time:" ,time);
+  console.log("word :",word);
+
 }
 
 //It is START function , it will run when user hit start button object : 
@@ -95,8 +138,9 @@ const START = (eventObject) =>{
           eventObject.target.innerText = "Done";  
        }else{
       
-        count(time,textArea,header2);
-
+        count(time,textArea,header2,word);
+         time.total = calculateTotalTime(time);
+        speed.gross = grossSpeed(time,word);
       }
 }
  
