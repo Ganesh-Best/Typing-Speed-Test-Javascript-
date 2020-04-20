@@ -26,15 +26,62 @@ console.log("This is javascript :");
  //It is textArea object (Element having either class or id value : textArea) 
  const textArea = document.querySelector('#textArea');
 
+ //It is message Object(Element having either class or id value : mesage);
+ const m1 = document.querySelector('.message');
+
  // It is time object ,It stores time related information :
  const time = {initial:0,finial:0,total:0};
 
 //IT is word object ,it store words related information : 
  const word = {typed:0,correct:0,incorrect:0,total:0};
 
-const speed = {net:0,gross:0,}; 
+const speed = {net:0,gross:0,accuracy:0}; 
  // It is random function :which is generate & return random number 
  //according to argument given to it:
+
+const reset = (textArea,btn,time,word,speed,h2,message) =>{
+  
+   textArea.value ="";
+   textArea.innerText = "";
+   textArea.classList.remove('hide');
+   btn.innerText = "Start";
+   time.initial = 0;
+   time.finial = 0;
+   time.total = 0; 
+   word.typed = 0;
+   word.correct = 0;
+   word.incorrect = 0;
+   word.total = 0;
+   speed.net = 0;
+   speed.gross = 0;
+   h2.innerText = "";
+   h2.classList.remove('hide');
+   message.innerHTML = "";
+   message.classList.add('hide');
+}
+
+const message = (time,speed,textArea,h2,message,btn) =>{
+  btn.innerHTML = "OK"; 
+   h2.classList.add('hide');
+   textArea.classList.add('hide');
+   message.classList.remove('hide');
+   message.innerHTML = `Time Taken: ${time.total} S <br> Gross Speed: ${Math.round(speed.gross)} WPM(Word Per Minute )
+   <br>Net Speed: ${Math.round(speed.net)} WPM(Word Per Minute) <br> Accuracy : ${speed.accuracy} %`;
+ 
+} 
+const accuracy = (speed) => {
+ 
+  acc =  ((speed.net/speed.gross) * 100) ;
+ console.log("Accuracy :",acc) ;
+  return acc ;
+
+} 
+const netSpeed = (time,word) =>{
+
+ let net = ((word.correct / time.total) * 60 ) ;
+ console.log("Net speed",net);
+ return net ;
+} 
 const random = (n) =>{
  return  Math.floor(Math.random()*n) ;
 }
@@ -136,11 +183,17 @@ const START = (eventObject) =>{
           
          //Changing text of target element :
           eventObject.target.innerText = "Done";  
-       }else{
+       }else if(eventObject.target.innerText === "Done"){
       
         count(time,textArea,header2,word);
          time.total = calculateTotalTime(time);
         speed.gross = grossSpeed(time,word);
+         speed.net  =  netSpeed(time,word);
+         speed.accuracy = accuracy(speed);
+         message( time,speed,textArea,h2,m1,btn);  
+      }else if(eventObject.target.innerText === "OK"){
+         reset(textArea,btn,time,word,speed,h2,m1);
+
       }
 }
  
